@@ -1,18 +1,31 @@
 <?php
 
-use Livewire\Component;
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
-class LandingFeatured extends Component
+new class extends Component
 {
-    public function render()
+    public $courses;
+
+    public function mount()
     {
-        $courses = Course::latest()
-            ->take(3)
+        $this->courses = Course::with('instructor')
+            ->latest()
+            ->take(8)
             ->get();
-
-        return view('livewire.landing-featured', compact('courses'));
     }
-}
 
-?>
+    public function enroll($courseId)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        Auth::user()
+            ->courses()
+            ->syncWithoutDetaching($courseId);
+
+        session()->flash('success', 'Successfully enrolled!');
+    }
+};
