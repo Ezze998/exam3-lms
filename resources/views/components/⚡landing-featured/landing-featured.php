@@ -6,26 +6,34 @@ use Livewire\Component;
 
 new class extends Component
 {
+    public $heroCourse;
     public $courses;
 
     public function mount()
     {
-        $this->courses = Course::with('instructor')
+        $all = Course::with('instructor')
             ->latest()
-            ->take(8)
+            ->take(9)
             ->get();
+
+        // course paling baru untuk hero
+        $this->heroCourse = $all->first();
+
+        // sisanya untuk slider
+        $this->courses = $all->skip(1);
     }
 
     public function enroll($courseId)
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        Auth::user()
-            ->courses()
-            ->syncWithoutDetaching($courseId);
-
-        session()->flash('success', 'Successfully enrolled!');
+{
+    if (!Auth::check()) {
+        return redirect()->to('/login');
     }
+
+    Auth::user()
+        ->courses()
+        ->syncWithoutDetaching($courseId);
+
+    session()->flash('success', 'Successfully enrolled!');
+}
+
 };

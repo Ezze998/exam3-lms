@@ -4,7 +4,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Course;
 
-class CourseShow extends Component
+new class extends Component
 {
     public Course $course;
     public $enrolled = false;
