@@ -1,18 +1,37 @@
 <?php 
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
-class StudentDashboard extends Component
+new class extends Component
 {
-    public function render()
+    public $courses = [];
+
+    public function mount()
     {
-        $courses = auth()->user()
+        $this->loadCourses();
+    }
+
+    public function loadCourses()
+    {
+        $this->courses = Auth::user()
             ->courses()
             ->with('lessons')
-            ->get();
+            ->get()
+            ->map(function ($course) {
 
-        return view('livewire.student-dashboard', compact('courses'));
+                // progress sederhana (sementara)
+                $totalLessons = $course->lessons->count();
+                $completed = 0; // nanti kita upgrade real progress
+
+                $course->progress = $totalLessons > 0
+                    ? round(($completed / $totalLessons) * 100)
+                    : 0;
+
+                return $course;
+            });
     }
+
 }
 
 

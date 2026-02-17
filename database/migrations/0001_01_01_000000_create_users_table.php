@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
 
             // 'student' or 'teacher' — default to student for safety
-            $table->string('role')->default('student');
+            $table->enum('role', ['student','teacher'])->default('student');
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
