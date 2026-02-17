@@ -35,5 +35,4 @@ new class extends Component
 
     session()->flash('success', 'Successfully enrolled!');
 }
-
 };

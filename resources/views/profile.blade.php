@@ -1,4 +1,4 @@
-<x-layouts.app-auth>
+<x-layouts.app>
 
 <div class="card bg-base-100 shadow-xl p-6 max-w-xl">
 
@@ -8,4 +8,4 @@
 
 </div>
 
-</x-layouts.app-auth>
+</x-layouts.app>

@@ -12,6 +12,14 @@ class Course extends Model
 
     protected $guarded = [];
 
+    protected $fillable = [
+    'title',
+    'description',
+    'thumbnail_url',
+    'instructor_id'
+    ];
+
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

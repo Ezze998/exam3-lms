@@ -1,3 +1,3 @@
-<x-layouts.app-auth>
-    <livewire:student-dashboard />
-</x-layouts.app-auth>
+<x-layouts.app>
+    <livewire:landing-featured />
+</x-layouts.app>

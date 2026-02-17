@@ -1,3 +1,3 @@
-<x-layouts.app-auth>
+<x-layouts.app>
     <livewire:classroom />
-</x-layouts.app-auth>
+</x-layouts.app>

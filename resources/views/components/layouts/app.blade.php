@@ -3,143 +3,95 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ $title ?? 'LMS' }} </title>
+    <title>{{ $title ?? 'LMS' }}</title>
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
 
 <body class="bg-base-200 min-h-screen">
 
-    {{-- Navbar --}}
     <header x-data="{ scrolled: false, open: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 20)"
-        :class="scrolled
-            ?
-            'bg-base-100/80 backdrop-blur-md shadow-lg' :
-            'bg-transparent'"
+        :class="scrolled ? 'bg-base-100/80 backdrop-blur-lg shadow-xl' : 'bg-transparent'"
         class="fixed top-0 w-full z-50 transition-all duration-300">
 
         <nav class="container mx-auto px-6 h-16 flex items-center justify-between">
 
-            {{-- ================= LEFT ================= --}}
+            {{-- LEFT --}}
             <div class="flex items-center gap-8">
 
-                {{-- Logo --}}
                 <a href="/" class="text-2xl font-extrabold text-primary">
                     LMS
                 </a>
 
-                {{-- Desktop Menu --}}
                 <ul class="hidden md:flex gap-6 font-medium">
 
-                    <li>
-                        <a href="/"
-                            class="{{ request()->is('/') ? 'text-primary font-semibold' : 'hover:text-primary' }}">
-                            Home
-                        </a>
-                    </li>
+                    <li><a href="/" class="hover:text-primary">Home</a></li>
+                    <li><a href="/catalog" class="hover:text-primary">Courses</a></li>
 
-                    <li>
-                        <a href="/catalog"
-                            class="{{ request()->is('catalog*') ? 'text-primary font-semibold' : 'hover:text-primary' }}">
-                            Courses
-                        </a>
-                    </li>
+                    @auth
+                        <li><a href="/dashboard" class="hover:text-primary">My Learning</a></li>
+                    @endauth
 
-                    <li>
-                        <a href="/dashboard"
-                            class="{{ request()->is('dashboard*') ? 'text-primary font-semibold' : 'hover:text-primary' }}">
-                            Dashboard
-                        </a>
-                    </li>
+                    {{-- ⭐ Teacher menu --}}
+                    @auth
+                        @if (auth()->user()->role === 'teacher')
+                            <li>
+                                <a href="/teacher/dashboard" class="text-secondary font-semibold">
+                                    Manage Courses
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
 
                 </ul>
             </div>
 
 
-            {{-- ================= RIGHT ================= --}}
+            {{-- RIGHT --}}
             <div class="hidden md:flex items-center gap-3">
 
-                {{-- SEARCH BAR --}}
-                <form action="/catalog" method="GET" class="relative">
-                    <input name="search" type="text" placeholder="Search courses..."
-                        class="input input-bordered input-sm w-56 pr-10">
-
-                    <button class="absolute right-2 top-1/2 -translate-y-1/2 opacity-60">
-                        🔍
-                    </button>
+                <form action="/catalog">
+                    <input name="search" placeholder="Search..." class="input input-bordered input-sm">
                 </form>
 
-
                 @auth
+                    {{-- Avatar dropdown --}}
+                    <div class="dropdown dropdown-end">
+                        <div tabindex="0" class="avatar btn btn-ghost btn-circle">
+                            <div class="w-10 rounded-full bg-primary text-white flex items-center justify-center">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                        </div>
 
-                    <a href="/dashboard" class="btn btn-sm btn-outline">
-                        My Learning
-                    </a>
+                        <ul tabindex="0" class="dropdown-content menu bg-base-100 shadow-lg rounded-box w-44 p-2">
 
-                    <form method="POST" action="/logout">
-                        @csrf
-                        <button class="btn btn-sm btn-error">
-                            Logout
-                        </button>
-                    </form>
+                            <li><a href="/profile">Profile</a></li>
+
+                            @if (auth()->user()->role === 'teacher')
+                                <li><a href="/teacher/dashboard">Teacher Panel</a></li>
+                            @endif
+
+                            
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-error btn-sm">
+                                        Logout
+                                    </button>
+                                </form>
+
+                            
+                        </ul>
+                    </div>
                 @else
-                    <a href="/login" class="btn btn-sm btn-ghost">
-                        Sign In
-                    </a>
-
-                    <a href="/register" class="btn btn-sm btn-primary">
-                        Sign Up
-                    </a>
-
+                    <a href="/login" class="btn btn-ghost btn-sm">Login</a>
+                    <a href="/register" class="btn btn-primary btn-sm">Register</a>
                 @endauth
             </div>
-
-
-            {{-- ================= MOBILE BTN ================= --}}
-            <button class="md:hidden btn btn-ghost" @click="open = !open">
-                ☰
-            </button>
         </nav>
-
-
-        {{-- ================= MOBILE MENU ================= --}}
-        <div x-show="open" x-transition class="md:hidden bg-base-100 border-t shadow-lg">
-
-            <div class="p-4 space-y-3">
-
-                <a href="/" class="block">Home</a>
-                <a href="/catalog" class="block">Courses</a>
-                <a href="/dashboard" class="block">Dashboard</a>
-
-                <form action="/catalog" method="GET">
-                    <input name="search" placeholder="Search..." class="input input-bordered w-full">
-                </form>
-
-                @auth
-                    <form method="POST" action="/logout">
-                        @csrf
-                        <button class="btn btn-error w-full">
-                            Logout
-                        </button>
-                    </form>
-                @else
-                    <a href="/login" class="btn btn-primary w-full">
-                        Sign In
-                    </a>
-                @endauth
-
-            </div>
-        </div>
-
     </header>
 
-
-    {{-- Spacer biar konten ga ketutup navbar --}}
     <div class="h-16"></div>
-
-
-
 
     <div class="container mx-auto p-6">
         {{ $slot }}
