@@ -45,6 +45,12 @@ class User extends Authenticatable
         return $this->hasMany(Course::class, 'instructor_id');
     }
 
+    // completed lessons pivot
+    public function completedLessons()
+    {
+        return $this->belongsToMany(Lesson::class, 'lesson_user')->withTimestamps();
+    }
+
     /*|--------------------------------------------------------------------------
     | ROLE CHECKS
     |--------------------------------------------------------------------------*/

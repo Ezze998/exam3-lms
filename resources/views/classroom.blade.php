@@ -1,3 +1,3 @@
 <x-layouts.app>
-    <livewire:classroom />
+    <livewire:classroom :course="$course" />
 </x-layouts.app>

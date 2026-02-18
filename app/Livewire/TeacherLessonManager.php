@@ -1,10 +1,12 @@
 <?php
 
+namespace App\Livewire;
+
 use Livewire\Component;
 use App\Models\Course;
 use App\Models\Lesson;
 
-new class extends Component
+class TeacherLessonManager extends Component
 {
     public Course $course;
     public $lessons = [];
@@ -29,7 +31,7 @@ new class extends Component
 
     public function delete($id)
     {
-        Lesson::find($id)?->delete();
+        Lesson::where('id', $id)->where('course_id', $this->course->id)->delete();
         $this->loadLessons();
     }
 
@@ -37,4 +39,4 @@ new class extends Component
     {
         return view('components.teacher-lesson-manager.teacher-lesson-manager');
     }
-};
+}

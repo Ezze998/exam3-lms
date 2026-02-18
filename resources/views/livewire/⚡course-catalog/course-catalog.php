@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Livewire;
-
 use Livewire\Component;
 use App\Models\Course;
 
-class CourseCatalog extends Component
+new class extends Component
 {
     public $search = '';
 
@@ -16,8 +14,6 @@ class CourseCatalog extends Component
             ->latest()
             ->get();
 
-        return view('livewire.course-catalog', compact('courses'));
+        return compact('courses'); 
     }
-}
-
-?>
+};

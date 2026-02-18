@@ -1,3 +1,81 @@
 <x-layouts.app>
-    <livewire:landing-featured />
+
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="text-4xl font-bold">Welcome to Brand LMS</h1>
+                    <p class="text-gray-600 mt-2">Create and manage courses, teach students, and track progress.</p>
+                </div>
+                <div>
+                    @auth
+                        @if(auth()->user()->role === 'teacher')
+                            <a href="/teacher/dashboard" class="btn btn-primary">Go to Teacher Dashboard</a>
+                        @else
+                            <a href="/dashboard" class="btn btn-primary">My Learning</a>
+                        @endif
+                    @else
+                        <a href="/login" class="btn btn-primary">Get Started</a>
+                    @endauth
+                </div>
+            </div>
+
+            {{-- Stats cards (site-wide for guests, teacher-specific available via Livewire on dashboard) --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                @php
+                    $totalStudents = \App\Models\User::where('role','student')->count();
+                    $totalCourses = \App\Models\Course::count();
+                    $latest = \App\Models\Course::latest()->first();
+                @endphp
+
+                <div class="p-6 bg-white rounded-lg shadow">
+                    <div class="text-sm text-gray-500">Students</div>
+                    <div class="text-2xl font-bold">{{ $totalStudents }}</div>
+                    <div class="text-xs text-gray-400 mt-2">Total learners on the platform</div>
+                </div>
+
+                <div class="p-6 bg-white rounded-lg shadow">
+                    <div class="text-sm text-gray-500">Courses</div>
+                    <div class="text-2xl font-bold">{{ $totalCourses }}</div>
+                    <div class="text-xs text-gray-400 mt-2">Available courses</div>
+                </div>
+
+                <div class="p-6 bg-white rounded-lg shadow">
+                    <div class="text-sm text-gray-500">Recent</div>
+                    <div class="text-2xl font-bold">{{ $latest?->title ?? '-' }}</div>
+                    <div class="text-xs text-gray-400 mt-2">Latest published course</div>
+                </div>
+            </div>
+
+            {{-- Recent classes preview --}}
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-semibold">Recent Classes</h2>
+                    <a href="/catalog" class="text-sm text-[#8b3f2f] font-semibold">Courses →</a>
+                </div>
+
+                @php $recent = \App\Models\Course::latest()->take(4)->get(); @endphp
+
+                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    @foreach($recent as $course)
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="h-36 overflow-hidden bg-gray-100">
+                                <img src="{{ $course->thumbnail_url ?? 'https://placehold.co/600x400' }}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-4">
+                                <div class="text-xs text-gray-400 mb-1">{{ $course->students()->count() }} enrolled</div>
+                                <h3 class="font-semibold">{{ Str::limit($course->title, 40) }}</h3>
+                                <p class="text-xs text-gray-500 mt-2">{{ Str::limit($course->description, 80) }}</p>
+                                <div class="mt-3">
+                                    <a href="/courses/{{ $course->id }}" class="btn btn-sm btn-outline">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+        </div>
+    </section>
+
 </x-layouts.app>

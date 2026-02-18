@@ -1,5 +1,3 @@
-<x-layouts.app-auth>
-
 <div class="p-8 space-y-6">
 
     <div class="flex justify-between items-center">
@@ -7,7 +5,7 @@
             Lessons — {{ $course->title }}
         </h1>
 
-        <button onclick="lesson_modal.showModal()" class="btn btn-primary">
+        <button onclick="document.getElementById('lesson_modal').showModal()" class="btn btn-primary">
             + Add Lesson
         </button>
     </div>
@@ -36,5 +34,3 @@
     </dialog>
 
 </div>
-
-</x-layouts.app-auth>

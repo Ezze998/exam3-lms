@@ -1,9 +1,11 @@
-<?php 
+<?php
+
+namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-new class extends Component
+class StudentDashboard extends Component
 {
     public $courses = [];
 
@@ -19,21 +21,19 @@ new class extends Component
             ->with('lessons')
             ->get()
             ->map(function ($course) {
-
-                // progress sederhana (sementara)
                 $totalLessons = $course->lessons->count();
-                $completed = 0; // nanti kita upgrade real progress
-
+                $completed = 0;
                 $course->progress = $totalLessons > 0
                     ? round(($completed / $totalLessons) * 100)
                     : 0;
-
                 return $course;
             });
     }
 
-}
+    public function render()
+                                $totalLessons = $course->lessons->count();
+                                $completed = Auth::user()->completedLessons()->where('course_id', $course->id)->count();
 
-
-?>
-
+                                $course->progress = $totalLessons > 0
+                                    ? round(($completed / $totalLessons) * 100)
+                                    : 0;
