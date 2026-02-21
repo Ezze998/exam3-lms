@@ -4,8 +4,7 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h1 class="text-4xl font-bold">Welcome to Brand LMS</h1>
-                    <p class="text-gray-600 mt-2">Create and manage courses, teach students, and track progress.</p>
+                    <h1 class="text-4xl font-bold">Welcome to InnoLearn</h1>
                 </div>
                 <div>
                     @auth

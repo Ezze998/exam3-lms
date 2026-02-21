@@ -19,7 +19,7 @@
 
             <div class="flex items-center">
                 <a href="/" class="text-2xl font-extrabold text-[#6b2f1f] tracking-tight">
-                    Brand LMS
+                    InnoLearn
                 </a>
                 <div class="ml-3 text-xs text-[#8b3f2f] opacity-80">Teach & Learn</div>
             </div>
