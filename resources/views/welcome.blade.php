@@ -47,32 +47,14 @@
                 </div>
             </div>
 
-            {{-- Recent classes preview --}}
+            {{-- Featured courses carousel --}}
             <div class="mb-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-2xl font-semibold">Recent Classes</h2>
-                    <a href="/catalog" class="text-sm text-[#8b3f2f] font-semibold">Courses →</a>
+                    <h2 class="text-2xl font-semibold">Featured Courses</h2>
+                    <a href="/catalog" class="text-sm text-[#8b3f2f] font-semibold">View All Courses →</a>
                 </div>
 
-                @php $recent = \App\Models\Course::latest()->take(4)->get(); @endphp
-
-                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    @foreach($recent as $course)
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                            <div class="h-36 overflow-hidden bg-gray-100">
-                                <img src="{{ $course->thumbnail_url ?? 'https://placehold.co/600x400' }}" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-4">
-                                <div class="text-xs text-gray-400 mb-1">{{ $course->students()->count() }} enrolled</div>
-                                <h3 class="font-semibold">{{ Str::limit($course->title, 40) }}</h3>
-                                <p class="text-xs text-gray-500 mt-2">{{ Str::limit($course->description, 80) }}</p>
-                                <div class="mt-3">
-                                    <a href="/courses/{{ $course->id }}" class="btn btn-sm btn-outline">Detail</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+                <livewire:featured-courses-carousel />
             </div>
 
         </div>

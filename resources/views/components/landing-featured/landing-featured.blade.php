@@ -5,7 +5,7 @@
 
 <div
     class="hero min-h-[75vh] rounded-3xl shadow-xl overflow-hidden relative text-white"
-    style="background-image: url('{{ $heroCourse->thumbnail_url ?? 'https://placehold.co/1600x800' }}'); background-size: cover; background-position: center;"
+    style="background-image: url('{{ $heroCourse->thumbnail ?? 'https://placehold.co/1600x800' }}'); background-size: cover; background-position: center;"
 >
 
     {{-- overlay gelap --}}
@@ -67,7 +67,7 @@
         <div class="card w-72 bg-base-100 shadow-xl flex-shrink-0">
 
             <figure>
-                <img src="{{ $course->thumbnail_url ?? 'https://placehold.co/600x400' }}"
+                <img src="{{ $course->thumbnail ?? 'https://placehold.co/600x400' }}"
                      class="h-40 w-full object-cover">
             </figure>
 

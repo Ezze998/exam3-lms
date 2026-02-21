@@ -27,13 +27,18 @@
             <div class="flex-1 flex justify-center">
                 <ul class="hidden md:flex gap-8 font-medium items-center">
                     <li><a href="/" class="hover:text-[#8b3f2f] text-[#8b3f2f]">Home</a></li>
-                    <li><a href="/catalog" class="hover:text-[#8b3f2f] text-[#8b3f2f] text-base">Courses</a></li>
+
+                    @guest
+                        <li><a href="/catalog" class="hover:text-[#8b3f2f] text-[#8b3f2f]">Courses</a></li>
+                    @endguest
+
                     @auth
-                        <li><a href="/dashboard" class="hover:text-[#8b3f2f] text-[#8b3f2f]">My Learning</a></li>
-                    @endauth
-                    @auth
-                        @if (auth()->user()->role === 'teacher')
-                            <li><a href="/teacher/dashboard" class="text-secondary font-semibold">Manage Courses</a></li>
+                        @if (auth()->user()->role === 'student')
+                            <li><a href="{{ route('student.my-courses') }}" class="hover:text-[#8b3f2f] text-[#8b3f2f]">My Courses</a></li>
+                            <li><a href="{{ route('student.lessons') }}" class="hover:text-[#8b3f2f] text-[#8b3f2f]">Lessons</a></li>
+                            <li><a href="/catalog" class="hover:text-[#8b3f2f] text-[#8b3f2f]">Browse Courses</a></li>
+                        @elseif (auth()->user()->role === 'teacher')
+                            <li><a href="/teacher/dashboard" class="hover:text-[#8b3f2f] text-[#8b3f2f] font-semibold">Courses</a></li>
                         @endif
                     @endauth
                 </ul>

@@ -10,6 +10,12 @@ class Lesson extends Model
     use HasFactory;
 
     protected $guarded = [];
+    
+    protected $fillable = ['course_id', 'title', 'content', 'status', 'position'];
+    
+    protected $casts = [
+        'status' => 'string',
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -23,6 +29,12 @@ class Lesson extends Model
     }
 
     public function students()
+    {
+        return $this->belongsToMany(User::class, 'lesson_user')->withTimestamps();
+    }
+
+    // Alias for completedLessons relationship
+    public function users()
     {
         return $this->belongsToMany(User::class, 'lesson_user')->withTimestamps();
     }

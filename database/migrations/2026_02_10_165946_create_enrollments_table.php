@@ -22,7 +22,8 @@ return new class extends Migration
               ->constrained()
               ->onDelete('cascade');
 
-        $table->timestamp('created_at')->useCurrent(); // Acts as 'enrolled_at'
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->useCurrent();
 
         // COMPOSITE KEY: Prevents a student from enrolling in the same course twice
         $table->unique(['user_id', 'course_id']);

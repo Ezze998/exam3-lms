@@ -14,7 +14,7 @@
 <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 flex flex-col">
 
     <div class="relative h-44 bg-gray-100 overflow-hidden">
-        <img src="{{ $course->thumbnail_url ?? 'https://placehold.co/600x400' }}" class="w-full h-full object-cover">
+        <img src="{{ $course->thumbnail ?? 'https://placehold.co/600x400' }}" class="w-full h-full object-cover">
         <div class="absolute top-3 right-3 bg-white/90 text-xs text-gray-700 px-2 py-1 rounded">{{ $course->lessons->count() }} lessons</div>
     </div>
 
