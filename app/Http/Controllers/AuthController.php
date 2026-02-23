@@ -28,6 +28,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            
+            // Redirect based on user role
+            if (auth()->user()->role === 'teacher') {
+                return redirect('/teacher/dashboard');
+            }
+            
             return redirect('/dashboard');
         }
 
@@ -47,12 +53,17 @@ class AuthController extends Controller
 
         $data['password'] = Hash::make($data['password']);
 
-        User::create($data);
+        $user = User::create($data);
 
         Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
         ]);
+
+        // Redirect based on user role
+        if ($user->role === 'teacher') {
+            return redirect('/teacher/dashboard');
+        }
 
         return redirect('/dashboard');
     }

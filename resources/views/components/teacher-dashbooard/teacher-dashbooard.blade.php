@@ -1,10 +1,43 @@
 <div class="min-h-screen bg-gradient-to-b from-[#fdebd0] to-white">
     <div class="max-w-7xl mx-auto px-6 py-12">
 
-        {{-- Header --}}
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-12">
+        {{-- Header with Welcome and Stats --}}
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold text-[#8b3f2f] mb-8">Welcome to InnoLearn</h1>
+            
+            {{-- Stats Cards --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                {{-- Students Card --}}
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-gray-600 text-sm mb-2">Students</h3>
+                    <p class="text-4xl font-bold text-[#8b3f2f]">{{ $totalStudents }}</p>
+                    <p class="text-gray-500 text-sm mt-2">Total learners enrolled</p>
+                </div>
+
+                {{-- Courses Card --}}
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-gray-600 text-sm mb-2">Courses</h3>
+                    <p class="text-4xl font-bold text-[#8b3f2f]">{{ $totalCourses }}</p>
+                    <p class="text-gray-500 text-sm mt-2">Courses you're teaching</p>
+                </div>
+
+                {{-- Latest Course Card --}}
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-gray-600 text-sm mb-2">Recent</h3>
+                    @if($latestCourse)
+                        <p class="text-xl font-bold text-[#8b3f2f] line-clamp-2">{{ $latestCourse->title }}</p>
+                        <p class="text-gray-500 text-sm mt-2">Latest published course</p>
+                    @else
+                        <p class="text-gray-400 italic">No courses yet</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        {{-- Header For My Courses Section --}}
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
             <div>
-                <h1 class="text-4xl font-bold text-[#8b3f2f] mb-2">My Courses</h1>
+                <h2 class="text-3xl font-bold text-[#8b3f2f] mb-2">My Courses</h2>
                 <p class="text-gray-600">Manage your courses, lessons, and students</p>
             </div>
 

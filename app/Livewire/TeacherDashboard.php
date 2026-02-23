@@ -10,6 +10,7 @@ class TeacherDashboard extends Component
     public $courses = [];
     public $totalCourses = 0;
     public $totalStudents = 0;
+    public $latestCourse = null;
 
     protected $listeners = ['refreshCourses' => 'loadCourses'];
 
@@ -25,6 +26,11 @@ class TeacherDashboard extends Component
         $this->totalStudents = $this->courses->map(function($c){
             return $c->students()->count();
         })->sum();
+        
+        // Get latest course added by the teacher
+        $this->latestCourse = Course::where('instructor_id', Auth::id())
+            ->latest('created_at')
+            ->first();
     }
 
     public function delete($id)
@@ -47,3 +53,4 @@ class TeacherDashboard extends Component
         return view('components.teacher-dashbooard.teacher-dashbooard');
     }
 }
+
