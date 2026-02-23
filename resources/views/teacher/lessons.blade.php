@@ -5,7 +5,8 @@
             {{-- Header --}}
             <div class="flex items-center justify-between mb-12">
                 <div>
-                    <a href="/courses/{{ $course->id }}" class="text-sm text-gray-600 hover:text-[#8b3f2f] inline-flex items-center gap-1 mb-2">
+                {{-- {{dd($course)}} --}}
+                    <a href="/courses/{{ $course }}" class="text-sm text-gray-600 hover:text-[#8b3f2f] inline-flex items-center gap-1 mb-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
@@ -152,7 +153,7 @@
             </div>
 
             {{-- TinyMCE Script --}}
-            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+            <script src="https://cdn.tiny.cloud/1/gotswgaofezea5uxu7kx7m58n2pr4yb3freeqrd2mvhp2bc3/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
             <script>
                 tinymce.init({
                     selector: '#lesson-content',

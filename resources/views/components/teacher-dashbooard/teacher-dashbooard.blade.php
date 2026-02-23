@@ -58,7 +58,7 @@
                                     View
                                 </a>
                                 <div class="flex gap-2">
-                                    <a href="{{ route('teacher.lessons', $course->id) }}" 
+                                    <a href="{{ route('teacher.lessons', $course) }}" 
                                        class="btn btn-sm btn-outline flex-1">
                                         Lessons
                                     </a>

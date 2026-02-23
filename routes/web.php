@@ -47,7 +47,8 @@ Route::middleware(['auth','role:teacher'])->group(function () {
         return view('teacher.edit', compact('course'));
     })->name('teacher.course.edit');
 
-    Route::get('/teacher/course/{course}/lessons', function ($course) {
+    Route::get('/teacher/course/{courseId}/lessons', function ($courseId) {
+        $course = \App\Models\Course::findOrFail($courseId);
         return view('teacher.lessons', compact('course'));
     })->name('teacher.lessons');
 
@@ -120,7 +121,8 @@ Route::middleware(['auth','role:teacher'])->group(function () {
 });
 
 // Classroom for enrolled students
-Route::get('/classroom/{course}', function (\App\Models\Course $course) {
+Route::get('/classroom/{courseId}', function ($courseId) {
+    $course = \App\Models\Course::findOrFail($courseId);
     return view('classroom', compact('course'));
 })->middleware('auth')->name('classroom');
 
