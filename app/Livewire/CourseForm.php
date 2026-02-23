@@ -40,8 +40,11 @@ class CourseForm extends Component
     {
         $this->validate();
 
-        $path = null;
+        $path = "";
         if ($this->thumbnail) {
+
+        }
+
             try {
                 $path = $this->thumbnail->store('thumbnails', 'public');
             } catch (\Exception $e) {
@@ -49,7 +52,6 @@ class CourseForm extends Component
                 session()->flash('warning', 'Thumbnail upload failed, saving without thumbnail.');
                 $path = null;
             }
-        }
 
         try {
             Course::create([
@@ -66,6 +68,7 @@ class CourseForm extends Component
             $this->resetValidation();
             $this->reset(['title', 'description', 'thumbnail', 'course']);
             session()->flash('success', 'Course saved successfully!');
+            return redirect()->route('teacher.dashboard');
         } catch (\Exception $e) {
             Log::error('Course save failed: '.$e->getMessage(), ['exception' => $e]);
             session()->flash('error', 'Failed to save course: '.$e->getMessage());

@@ -42,6 +42,53 @@ Route::middleware(['auth','role:teacher'])->group(function () {
         return view('teacher.create');
     })->name('teacher.course.create');
 
+    Route::post('/teacher/course', function (\Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'thumbnail' => 'nullable|image|max:2048',
+        ]);
+
+        $path = null;
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('thumbnails', 'public');
+        }
+
+        \App\Models\Course::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'thumbnail' => $path,
+            'instructor_id' => auth()->id(),
+            'slug' => \Illuminate\Support\Str::slug($validated['title']),
+        ]);
+
+        return redirect('/teacher/dashboard')->with('success', 'Course saved successfully!');
+    })->name('teacher.course.store');
+
+    Route::post('/teacher/course/{course}', function (\Illuminate\Http\Request $request, \App\Models\Course $course) {
+        abort_if($course->instructor_id !== auth()->id(), 403);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'thumbnail' => 'nullable|image|max:2048',
+        ]);
+
+        $path = $course->thumbnail;
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('thumbnails', 'public');
+        }
+
+        $course->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'thumbnail' => $path,
+            'slug' => \Illuminate\Support\Str::slug($validated['title']),
+        ]);
+
+        return redirect('/teacher/dashboard')->with('success', 'Course updated successfully!');
+    })->name('teacher.course.update');
+
     Route::get('/teacher/course/{course}/edit', function (\App\Models\Course $course) {
         abort_if($course->instructor_id !== auth()->id(), 403);
         return view('teacher.edit', compact('course'));

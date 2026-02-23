@@ -23,7 +23,7 @@
 <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition">
 
     <figure>
-        <img src="{{ $course->thumbnail ?? 'https://placehold.co/600x400' }}"
+        <img src="{{ asset('storage/' . $course->thumbnail ?? 'https://placehold.co/600x400') }}"
              class="h-40 w-full object-cover">
     </figure>
 

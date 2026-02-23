@@ -30,7 +30,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             
             // Redirect based on user role
-            if (auth()->user()->role === 'teacher') {
+            if (Auth::user()->role === 'teacher') {
                 return redirect('/teacher/dashboard');
             }
             

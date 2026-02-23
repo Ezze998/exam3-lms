@@ -43,8 +43,8 @@
             wire:click="save"
             wire:loading.attr="disabled"
             class="flex-1 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-medium py-3 rounded-lg transition-all duration-200 transform hover:scale-105 disabled:opacity-50">
-            <span wire:loading.remove>Save Course</span>
-            <span wire:loading>Saving...</span>
+            <span>Save Course</span>
+            <span wire:loading wire:target="save">Saving...</span>
         </button>
         <a href="/teacher/dashboard" class="flex-1 text-center bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 rounded-lg transition-all duration-200">
             Cancel
@@ -68,3 +68,5 @@
         </div>
     @endif
 </div>
+
+

@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gradient-to-b from-[#fdebd0] to-white">
     <div class="max-w-7xl mx-auto px-6 py-12">
-
+        <!-- Debug: Total courses loaded: {{ $totalCourses }}, Auth ID: {{ auth()->id() }} -->
         {{-- Header with Welcome and Stats --}}
         <div class="mb-12">
             <h1 class="text-4xl font-bold text-[#8b3f2f] mb-8">Welcome to InnoLearn</h1>
@@ -56,7 +56,7 @@
                     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
                         {{-- Thumbnail --}}
                         <div class="h-40 bg-gray-100 overflow-hidden relative">
-                            <img src="{{ $course->thumbnail ?? 'https://placehold.co/600x400' }}" 
+                            <img src="{{ asset('storage/' . ($course->thumbnail ?? 'https://placehold.co/600x400')) }}" 
                                  class="w-full h-full object-cover hover:scale-105 transition duration-300">
                             @if($course->trashed())
                                 <div class="absolute inset-0 bg-black/30 flex items-center justify-center">

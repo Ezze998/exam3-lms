@@ -12,7 +12,7 @@
 <div class="card bg-base-100 shadow">
 
     <figure>
-        <img src="{{ $course->thumbnail_url ?? 'https://placehold.co/600x400' }}"
+        <img src="{{ asset('storage/' . $course->thumbnail_url ?? 'https://placehold.co/600x400') }}"
              class="h-40 w-full object-cover">
     </figure>
 

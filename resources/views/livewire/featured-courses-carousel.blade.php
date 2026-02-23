@@ -9,7 +9,7 @@
                             <div class="flex flex-col md:flex-row h-96">
                                 <!-- Thumbnail -->
                                 <div class="md:w-1/3 h-48 md:h-full bg-gray-100 overflow-hidden">
-                                    <img src="{{ $course['thumbnail'] ?? 'https://placehold.co/600x400' }}" 
+                                    <img src="{{ asset('storage/' . $course['thumbnail']) }}" 
                                          class="w-full h-full object-cover" 
                                          alt="{{ $course['title'] }}">
                                 </div>
